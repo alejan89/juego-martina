@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#221443">
+  <meta name="description" content="Dos aventuras mágicas de Alicia Felicia y la Princesa Martina: coloreá personajes y salvá a la ardillita del dragón de fuego.">
+  <title>Aventuras Mágicas · Alicia Felicia y la Princesa Martina</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="starscape" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><span>✧</span></div>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Aventuras mágicas, inicio">
+        <span class="brand-mark" aria-hidden="true">✧</span>
+        <span class="brand-lines"><strong>Aventuras <em>Mágicas</em></strong><small>UN CUENTO PARA JUGAR</small></span>
+      </a>
+      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" title="Activar o silenciar los sonidos"><span id="soundIcon" aria-hidden="true">♫</span> <span id="soundText">Sonidos activados</span></button>
+    </header>
+
+    <main id="inicio">
+      <section class="intro" aria-label="Bienvenida">
+        <div class="intro-copy">
+          <span class="eyebrow"><span aria-hidden="true">✦</span> DEL CUENTO A LA AVENTURA <span aria-hidden="true">✦</span></span>
+          <h1>El bosque está lleno<br>de <span>magia y juegos</span></h1>
+          <p>¡Hola, pequeña aventurera! Alicia Felicia y la Princesa Martina te invitan a explorar su mundo encantado. ¿Qué aventura elegís hoy?</p>
+          <div class="intro-chipset" aria-label="Características"><span>✿ Para peques</span><span>♥ Sin anuncios</span><span>✧ Juegos mágicos</span></div>
+        </div>
+        <div class="cover-medallion"><img src="assets/portada.webp" alt="Portada original del cuento Alicia Felicia y la Princesa Martina" loading="eager"><span class="medallion-sparkle">✦</span></div>
+      </section>
+
+      <section class="game-hub" aria-label="Elegir juego">
+        <div class="hub-top"><span>✧ ELEGÍ TU AVENTURA</span><span class="hub-line" aria-hidden="true"></span><span>✧</span></div>
+        <div class="mode-tabs" role="tablist" aria-label="Tipos de juegos">
+          <button class="mode-tab is-active" id="tab-color" type="button" role="tab" aria-selected="true" aria-controls="panel-color" tabindex="0" data-tab="color">
+            <span class="tab-emoji" aria-hidden="true">🎨</span><span class="tab-words"><strong>Coloreá el cuento</strong><small>Pintá a tus personajes favoritos</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="mode-tab" id="tab-dragon" type="button" role="tab" aria-selected="false" aria-controls="panel-dragon" tabindex="-1" data-tab="dragon">
+            <span class="tab-emoji" aria-hidden="true">🐉</span><span class="tab-words"><strong>¡Salvá a la ardillita!</strong><small>Esquivá las llamas del dragón</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+
+        <section class="game-panel" id="panel-color" role="tabpanel" aria-labelledby="tab-color">
+          <div class="panel-heading"><div><div class="section-kicker">✿ EL TALLER DE COLOR</div><h2>¡Dale vida a la magia!</h2><p>Elegí un personaje, tocá un color y pintá su dibujo. ¡Podés guardar tu obra!</p></div><div class="heading-sticker" aria-hidden="true">🖌️</div></div>
+          <div class="character-list" id="characterList" role="group" aria-label="Elegir personaje">
+            <button type="button" class="character-card selected" data-character="alicia" aria-pressed="true"><img src="assets/alicia.webp" alt="Alicia Felicia, del cuento"><span>🌷 Alicia Felicia</span></button>
+            <button type="button" class="character-card" data-character="martina" aria-pressed="false"><img src="assets/martina.webp" alt="Princesa Martina, del cuento"><span>👑 Princesa Martina</span></button>
+            <button type="button" class="character-card" data-character="dragon" aria-pressed="false"><img src="assets/dragon.webp" alt="El dragón de fuego, del cuento"><span>🐉 Dragón de fuego</span></button>
+            <button type="button" class="character-card" data-character="ardilla" aria-pressed="false"><img src="assets/ardilla.webp" alt="La ardillita, del cuento"><span>🐿️ La ardillita</span></button>
+          </div>
+          <div class="color-layout">
+            <div class="color-paper">
+              <div class="paper-bar"><span><span class="spark-dot">✦</span> <strong id="drawingTitle">Alicia Felicia</strong></span><span class="progress-pill" id="colorProgress">0 / 12 zonas</span></div>
+              <div id="drawingStage" class="drawing-stage" aria-label="Dibujo interactivo para colorear"><!-- SVG interactivo insertado por JS --></div>
+              <div class="paper-tip" id="paintHint" role="status" aria-live="polite">✨ Tocá cualquier parte blanca del dibujo para pintarla.</div>
+            </div>
+            <aside class="color-tools" aria-label="Herramientas para colorear">
+              <div class="tools-head"><span aria-hidden="true">🌈</span><div><h3>Tu paleta mágica</h3><p>Elegí el color que más te guste</p></div></div>
+              <div class="paint-preview"><span id="brushDot" aria-hidden="true"></span><span id="colorName">Rosa chicle</span><span aria-hidden="true">✎</span></div>
+              <div class="palette-grid" id="colorPalette" role="group" aria-label="Colores para pintar"></div>
+              <div class="tool-divider"></div>
+              <div class="paint-actions">
+                <button class="action-button magic" type="button" id="magicFill">✨ Colores mágicos</button>
+                <button class="action-button secondary" type="button" id="undoPaint">↶ Deshacer</button>
+                <button class="action-button secondary" type="button" id="clearPaint">↻ Empezar otra vez</button>
+                <button class="action-button download" type="button" id="savePaint">↓ Guardar mi dibujo</button>
+              </div>
+              <div class="tools-note"><span aria-hidden="true">♥</span> Cada obra es única, ¡como vos!</div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="game-panel" id="panel-dragon" role="tabpanel" aria-labelledby="tab-dragon" hidden>
+          <div class="panel-heading dragon-heading"><div><div class="section-kicker">✦ LA GRAN MISIÓN</div><h2>¡Rescatemos a la ardillita!</h2><p>Ayudá a Alicia a juntar <strong>3 estrellas mágicas</strong>, esquivar el fuego y llegar hasta su amiga.</p></div><div class="heading-sticker" aria-hidden="true">🐿️</div></div>
+          <div class="mission-status"><span class="status-chip">❤️ <strong id="livesValue">3</strong> vidas</span><span class="status-chip">⭐ <strong id="starsValue">0</strong> / 3 estrellas</span><span class="status-chip">🏆 <strong id="winsValue">0</strong> rescates</span></div>
+          <div class="arcade-frame" id="arcadeFrame">
+            <canvas id="arcade" width="960" height="530" aria-label="Juego de esquivar el fuego con Alicia: usá flechas, WASD o botones táctiles para desplazarte. Juntá tres estrellas y llegá hasta la ardillita." tabindex="0"></canvas>
+            <div class="game-overlay" id="arcadeOverlay" role="status" aria-live="polite">
+              <div class="overlay-box"><div class="overlay-mascot" id="overlayMascot" aria-hidden="true">🐉</div><span class="overlay-eyebrow" id="overlayEyebrow">UNA MISIÓN MÁGICA</span><h3 id="overlayTitle">¡La ardillita necesita tu ayuda!</h3><p id="overlayDescription">Mové a Alicia con las flechas o los botones. Reuní tres estrellas, evitá las llamas y alcanzá a la ardillita.</p><button class="big-play" type="button" id="playDragon">▶ ¡Vamos a jugar!</button></div>
+            </div>
+          </div>
+          <div class="arcade-controls">
+            <div class="controls-help"><span class="controls-badge">⌨</span><span><strong>Computadora:</strong> flechas o W A S D<br><strong>Celular:</strong> botones de movimiento</span></div>
+            <div class="control-buttons"><button type="button" id="pauseDragon" class="arcade-action">Ⅱ Pausa</button><button type="button" id="restartDragon" class="arcade-action">↻ Reiniciar</button></div>
+          </div>
+          <div class="touch-control-wrap" aria-label="Controles de movimiento táctiles">
+            <div class="dpad"><button class="dpad-key up" data-dir="up" type="button" aria-label="Mover arriba">▲</button><button class="dpad-key left" data-dir="left" type="button" aria-label="Mover izquierda">◀</button><span class="dpad-center" aria-hidden="true">✦</span><button class="dpad-key right" data-dir="right" type="button" aria-label="Mover derecha">▶</button><button class="dpad-key down" data-dir="down" type="button" aria-label="Mover abajo">▼</button></div>
+            <p>Mantené apretada una flecha<br>para mover a Alicia</p>
+          </div>
+          <div class="game-explainer"><div><span>⭐</span><strong>Primero</strong><small>Juntá 3 estrellas</small></div><span class="explain-next">➜</span><div><span>🔥</span><strong>Después</strong><small>Esquivá las llamas</small></div><span class="explain-next">➜</span><div><span>🐿️</span><strong>¡Por fin!</strong><small>Rescatá a la ardillita</small></div></div>
+        </section>
+      </section>
+      <section class="storybook-footer"><span class="footer-ornament">✦</span><p>Un rincón mágico inspirado en <strong>“Alicia Felicia y la Princesa Martina”</strong><br>Hecho para jugar, imaginar y compartir en familia.</p><span class="footer-ornament">✦</span></section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="confetti-container" id="confetti" aria-hidden="true"></div>
+</body>
+</html>
