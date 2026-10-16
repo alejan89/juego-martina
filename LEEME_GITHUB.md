@@ -1,37 +1,54 @@
 # Aventuras Mágicas — Alicia Felicia y la Princesa Martina
 
-Juego web infantil basado en el cuento original **Alicia Felicia y la Princesa Martina: Las niñas del bosque y el dragón de fuego**.
+**Sitio infantil con lector de cuentos y dos juegos interactivos, listo para publicar en GitHub Pages.**
 
-## ¿Qué incluye?
+Esta es la versión ampliada del proyecto anterior: conserva el juego de colorear y el rescate de la ardillita, e incorpora una tercera pestaña para leer el cuento original.
 
-- **Coloreá el cuento:** cuatro personajes (Alicia, Martina, dragón, ardillita); 18 pinturas; pintura tocando zonas, deshacer, borrar, coloración mágica y descarga PNG; progreso guardado en este navegador.
-- **¡Salvá a la ardillita!:** Alicia se mueve para recoger 3 estrellas, esquivar llamas y llegar a rescatar a su amiga; 3 vidas, reinicio, pausa, controles de teclado y controles táctiles.
-- Sonidos y melodías generados localmente, con interruptor para silenciarlos.
-- Ilustraciones originales del PDF utilizadas como imágenes de referencia y fondo. Los dibujos interactivos y el minijuego son gráficos vectoriales hechos especialmente para esta web.
-- Sin anuncios, sin registro, sin enviar datos a terceros. Los avances se guardan de forma local en el dispositivo (localStorage).
-- No utiliza servidor, base de datos ni servicios de pago: compatible con **GitHub Pages**.
+## Las tres pestañas
 
-## Cómo subirlo a GitHub Pages
+1. **📖 Leé el cuento.** Lector interactivo con las **21 ilustraciones originales** del PDF: portada y veinte láminas a doble página. En computadora se muestra cada lámina completa, y en celulares se divide en dos páginas sucesivas para que las letras se puedan leer con mayor comodidad (40 páginas interiores). Las hojas cambian con un toque o clic y una animación de página. Incluye botones Anterior/Siguiente, flechas del teclado, navegación por capítulos, indicador de lectura, opción de pantalla completa y recuerdo del punto donde se dejó el libro en ese navegador.
+2. **🎨 Coloreá el cuento.** Cuatro personajes para pintar (Alicia, Martina, dragón y ardillita); 18 colores; pintar tocando zonas, deshacer, recomenzar, colores mágicos y guardar en PNG. El avance se guarda localmente.
+3. **🐉 ¡Salvá a la ardillita!** Mové a Alicia, recogé tres estrellas, evitá las llamas del dragón y llegá a la ardillita. Incluye tres vidas, reinicio, pausa, controles de teclado y controles táctiles.
 
-**IMPORTANTE:** GitHub no descomprime automáticamente un ZIP que subís al repositorio. Primero descomprimilo en tu computadora.
+## Música y sonidos
 
-1. Descargá `Aventuras_Magicas_Alicia_Martina_GitHub.zip` y extraé el contenido.
-2. Abrí https://github.com e ingresá a tu cuenta.
-3. Creá un repositorio público, por ejemplo `aventuras-alicia-martina` (o abrí uno existente).
-4. Dentro del repositorio, elegí **Add file > Upload files**.
-5. Arrastrá **`index.html`, `styles.css`, `app.js`, `LEEME_GITHUB.md` y la carpeta `assets` completa**, manteniendo esa estructura. Usá el explorador de archivos para arrastrar los contenidos de la carpeta extraída; algunas interfaces no permiten subir una carpeta de una sola vez, pero sí arrastrar todos los archivos de su interior conservando sus rutas. Debe quedar `index.html` en la raíz y las imágenes en `assets/`.
-6. Confirmá con **Commit changes**.
-7. Andá a **Settings > Pages**; en **Build and deployment**, elegí **Deploy from a branch**, rama `main`, carpeta **/(root)** y guardá.
-8. Esperá a que GitHub publique. Tu sitio quedará, normalmente, en una dirección como `https://TU-USUARIO.github.io/aventuras-alicia-martina/`.
+- El **lector** incluye **cinco pistas instrumentales originales**, compuestas por computadora para este proyecto: bosque mágico, cueva misteriosa, dragón, castillo y final feliz.
+- La música cambia automáticamente según el momento de la historia, se repite suavemente dentro de cada tramo y se detiene al salir de la pestaña de lectura.
+- En el lector hay un botón para pausar/reanudar la música. También se respeta el interruptor general de sonido del sitio.
+- Los minijuegos tienen sus propios efectos sonoros sintetizados mediante Web Audio.
+- **Importante:** por seguridad, los navegadores bloquean el audio automático hasta que el visitante haga un clic o toque. Por eso la música comienza al entrar a «Leé el cuento» (o al tocar «Música activada» si el navegador la bloquea inicialmente).
+- La música es instrumental, **no** es la narración del audiolibro MP3.
 
-## Estructura de archivos
+## Subir la versión a GitHub Pages
 
-```
+**No subas directamente el ZIP a GitHub:** primero descomprimilo. La raíz del repositorio debe contener `index.html`.
+
+### Si ya publicaste el juego anterior
+
+1. Descargá y descomprimí `Aventuras_Magicas_Alicia_Martina_CON_LIBRO_GitHub.zip`.
+2. Abrí el repositorio en GitHub, con tu cuenta habitual.
+3. Entrá en **Add file → Upload files** y arrastrá **todo el contenido** de la carpeta descomprimida: `index.html`, `styles.css`, `app.js`, `LEEME_GITHUB.md` y la carpeta `assets` con **todas sus subcarpetas**. Si GitHub indica que ya existen archivos con esos nombres, el nuevo envío debe reemplazarlos con la versión actualizada.
+4. Confirmá con **Commit changes**.
+5. Esperá a que termine la publicación en **Actions** o consultá el sitio en **Settings → Pages**. Si ves la página vieja, hacé una recarga forzada (Ctrl+F5) o probá una pestaña de incógnito.
+
+**¡Importante!** Las nuevas carpetas `assets/libro/` y `assets/musica/` son necesarias para que funcionen las ilustraciones y las pistas musicales. Si se omiten, el lector no funcionará correctamente.
+
+### Si es un repositorio nuevo
+
+1. Creá un repositorio público en https://github.com.
+2. Subí todos los archivos descomprimidos preservando la estructura y confirmá los cambios.
+3. En **Settings → Pages**, seleccioná **Deploy from a branch** > rama `main` > carpeta `/(root)` y guardá.
+4. GitHub Pages publicará la web en una dirección similar a `https://USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`.
+
+## Estructura de la entrega
+
+```text
 index.html
 styles.css
 app.js
 LEEME_GITHUB.md
 assets/
+  favicon.svg
   portada.webp
   bosque.webp
   alicia.webp
@@ -39,19 +56,22 @@ assets/
   dragon.webp
   ardilla.webp
   castillo.webp
-  favicon.svg
+  libro/
+    pagina_01.webp
+    ...
+    pagina_21.webp
+  musica/
+    bosque.mp3
+    cueva.mp3
+    dragon.mp3
+    castillo.mp3
+    final.mp3
 ```
 
-## Cómo jugar
+## Requisitos y derechos
 
-**Colorear:** seleccioná un personaje, después un color de la paleta y tocá las zonas blancas. `Colores mágicos` completa el personaje automáticamente. `Deshacer` revierte la última operación; `Guardar mi dibujo` descarga una imagen PNG.
-
-**Rescate:** usá las flechas del teclado o W/A/S/D; en celular, mantené presionados los botones en forma de cruz. Primero juntá tres estrellas; después alcanzá a la ardillita, ubicada en el extremo derecho. Si una llama te toca, perdés una vida temporalmente y tenés un breve período de protección.
-
-## Notas técnicas
-
-- Optimizado para navegadores modernos Chrome, Edge, Firefox y Safari. La descarga PNG requiere funciones modernas del navegador. En algunos dispositivos móviles la descarga puede abrir la imagen para guardarla manualmente.
-- El sonido se activa únicamente después de una interacción del usuario, respetando las restricciones de los navegadores.
-- Las fuentes pueden descargarse desde Google Fonts; si no hay conexión, se usan fuentes del equipo y el juego sigue funcionando.
-- Las imágenes son derivadas del PDF aportado por el autor para este proyecto. Antes de compartir públicamente, asegurate de tener los derechos para publicar dichas imágenes.
-- Para probar sin GitHub, abrí `index.html` en Chrome/Edge; en algunos navegadores la apertura desde archivos locales puede limitar ciertas funciones. GitHub Pages evita esas restricciones.
+- Funciona como web estática: **no necesita servidor de aplicaciones ni base de datos**. Compatible con navegadores actuales y GitHub Pages.
+- Sin anuncios, sin seguimiento; el progreso y las preferencias se guardan solo en el navegador de cada familia.
+- Puede usarse desde dispositivos móviles y computadoras. La conexión a Internet es necesaria para abrir el sitio alojado en GitHub Pages.
+- Las ilustraciones se extrajeron del cuento PDF aportado para la producción de esta versión. Antes de publicarlas, verificá que contás con los derechos o permisos de difusión pública.
+- Las pistas musicales son **originales, generadas especialmente** para el proyecto y se incluyen como archivos locales. No dependen de Spotify, YouTube u otros servicios externos.

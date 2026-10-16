@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#221443">
-  <meta name="description" content="Dos aventuras mágicas de Alicia Felicia y la Princesa Martina: coloreá personajes y salvá a la ardillita del dragón de fuego.">
+  <meta name="description" content="Tres aventuras mágicas de Alicia Felicia y la Princesa Martina: leé el cuento ilustrado, coloreá personajes y salvá a la ardillita del dragón de fuego.">
   <title>Aventuras Mágicas · Alicia Felicia y la Princesa Martina</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
     <header class="site-header">
       <a class="brand" href="#inicio" aria-label="Aventuras mágicas, inicio">
         <span class="brand-mark" aria-hidden="true">✧</span>
-        <span class="brand-lines"><strong>Aventuras <em>Mágicas</em></strong><small>UN CUENTO PARA JUGAR</small></span>
+        <span class="brand-lines"><strong>Aventuras <em>Mágicas</em></strong><small>UN CUENTO PARA LEER Y JUGAR</small></span>
       </a>
       <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" title="Activar o silenciar los sonidos"><span id="soundIcon" aria-hidden="true">♫</span> <span id="soundText">Sonidos activados</span></button>
     </header>
@@ -30,15 +30,18 @@
         <div class="intro-copy">
           <span class="eyebrow"><span aria-hidden="true">✦</span> DEL CUENTO A LA AVENTURA <span aria-hidden="true">✦</span></span>
           <h1>El bosque está lleno<br>de <span>magia y juegos</span></h1>
-          <p>¡Hola, pequeña aventurera! Alicia Felicia y la Princesa Martina te invitan a explorar su mundo encantado. ¿Qué aventura elegís hoy?</p>
+          <p>¡Hola, pequeña aventurera! Alicia Felicia y la Princesa Martina te invitan a explorar su mundo encantado. ¿Leemos el cuento o elegimos una aventura?</p>
           <div class="intro-chipset" aria-label="Características"><span>✿ Para peques</span><span>♥ Sin anuncios</span><span>✧ Juegos mágicos</span></div>
         </div>
         <div class="cover-medallion"><img src="assets/portada.webp" alt="Portada original del cuento Alicia Felicia y la Princesa Martina" loading="eager"><span class="medallion-sparkle">✦</span></div>
       </section>
 
-      <section class="game-hub" aria-label="Elegir juego">
+      <section class="game-hub" aria-label="Leer el cuento o elegir juego">
         <div class="hub-top"><span>✧ ELEGÍ TU AVENTURA</span><span class="hub-line" aria-hidden="true"></span><span>✧</span></div>
         <div class="mode-tabs" role="tablist" aria-label="Tipos de juegos">
+          <button class="mode-tab read-tab" id="tab-book" type="button" role="tab" aria-selected="false" aria-controls="panel-book" tabindex="-1" data-tab="book">
+            <span class="tab-emoji" aria-hidden="true">📖</span><span class="tab-words"><strong>Leé el cuento</strong><small>Un libro mágico con música</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
+          </button>
           <button class="mode-tab is-active" id="tab-color" type="button" role="tab" aria-selected="true" aria-controls="panel-color" tabindex="0" data-tab="color">
             <span class="tab-emoji" aria-hidden="true">🎨</span><span class="tab-words"><strong>Coloreá el cuento</strong><small>Pintá a tus personajes favoritos</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
           </button>
@@ -46,6 +49,49 @@
             <span class="tab-emoji" aria-hidden="true">🐉</span><span class="tab-words"><strong>¡Salvá a la ardillita!</strong><small>Esquivá las llamas del dragón</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
           </button>
         </div>
+
+        <section class="game-panel book-panel" id="panel-book" role="tabpanel" aria-labelledby="tab-book" hidden>
+          <div class="panel-heading book-heading">
+            <div><div class="section-kicker">✦ LA BIBLIOTECA ENCANTADA</div><h2>Un cuento para soñar</h2><p>Leé las páginas originales de <strong>Alicia Felicia y la Princesa Martina</strong>. Tocá la página para avanzar y disfrutá la música de cada aventura.</p></div>
+            <div class="heading-sticker" aria-hidden="true">📖</div>
+          </div>
+          <div class="reader-space" id="readerSpace">
+            <div class="reader-banner"><span>✦ EDICIÓN ILUSTRADA ✦</span><strong>Alicia Felicia <i>y la</i> Princesa Martina</strong><small>Las niñas del bosque y el dragón de fuego</small></div>
+            <div class="reader-toolbar">
+              <button type="button" class="reader-music" id="readerMusic" aria-pressed="true" title="Activar o pausar la música del cuento"><span id="readerMusicSymbol" aria-hidden="true">♫</span><span id="readerMusicLabel">Música activada</span></button>
+              <span class="reader-chapter" id="readerChapter">✧ Érase una vez...</span>
+              <button type="button" class="reader-fullscreen" id="readerFullscreen" title="Leer el cuento en pantalla completa">⛶ <span>Pantalla completa</span></button>
+            </div>
+            <div class="reader-layout">
+              <button type="button" class="reader-side reader-side-prev" id="readerPrevSide" aria-label="Volver a la página anterior">‹</button>
+              <div class="reader-book-wrap">
+                <div class="reader-glow" aria-hidden="true"></div>
+                <div class="reader-book is-cover" id="readerBook" tabindex="0" role="button" aria-label="Clic para pasar a la siguiente página. Usá las flechas del teclado para navegar." title="Tocá para pasar de página">
+                  <div class="reader-image-clip" id="readerClip"><img class="reader-image" id="readerImage" src="assets/libro/pagina_01.webp" alt="Portada original: Alicia Felicia y la Princesa Martina, las niñas del bosque y el dragón de fuego" fetchpriority="high"></div>
+                  <div class="reader-page-gloss" aria-hidden="true"></div>
+                  <div class="reader-click-hint" id="readerClickHint" aria-hidden="true">Tocá para abrir el cuento <span>›</span></div>
+                  <div class="reader-turn-layer" id="readerTurnLayer" aria-hidden="true"></div>
+                </div>
+                <div class="reader-book-base" aria-hidden="true"></div>
+              </div>
+              <button type="button" class="reader-side reader-side-next" id="readerNextSide" aria-label="Pasar a la página siguiente">›</button>
+            </div>
+            <div class="reader-progress-bar" aria-hidden="true"><div id="readerProgressFill"></div></div>
+            <div class="reader-navigation">
+              <button type="button" class="reader-nav reader-nav-back" id="readerPrev">‹ <span>Anterior</span></button>
+              <div class="reader-page-indicator"><span id="readerPageLabel" aria-live="polite">Portada</span><small id="readerPageSubtitle">Tu aventura comienza aquí</small></div>
+              <button type="button" class="reader-nav reader-nav-next" id="readerNext"><span>Siguiente</span> ›</button>
+            </div>
+            <div class="reader-chapters" aria-label="Saltar a una parte del cuento">
+              <button type="button" class="reader-chapter-chip is-current" data-book-jump="0">🌷 Portada</button>
+              <button type="button" class="reader-chapter-chip" data-book-jump="5">✨ La cueva</button>
+              <button type="button" class="reader-chapter-chip" data-book-jump="11">🐉 El dragón</button>
+              <button type="button" class="reader-chapter-chip" data-book-jump="27">🏰 El castillo</button>
+              <button type="button" class="reader-chapter-chip" data-book-jump="37">💖 Final feliz</button>
+            </div>
+            <div class="reader-bottom-note">✿ Las ilustraciones y las palabras son las del cuento original. <span>La música acompaña la lectura, sin narración automática.</span></div>
+          </div>
+        </section>
 
         <section class="game-panel" id="panel-color" role="tabpanel" aria-labelledby="tab-color">
           <div class="panel-heading"><div><div class="section-kicker">✿ EL TALLER DE COLOR</div><h2>¡Dale vida a la magia!</h2><p>Elegí un personaje, tocá un color y pintá su dibujo. ¡Podés guardar tu obra!</p></div><div class="heading-sticker" aria-hidden="true">🖌️</div></div>
@@ -97,7 +143,7 @@
           <div class="game-explainer"><div><span>⭐</span><strong>Primero</strong><small>Juntá 3 estrellas</small></div><span class="explain-next">➜</span><div><span>🔥</span><strong>Después</strong><small>Esquivá las llamas</small></div><span class="explain-next">➜</span><div><span>🐿️</span><strong>¡Por fin!</strong><small>Rescatá a la ardillita</small></div></div>
         </section>
       </section>
-      <section class="storybook-footer"><span class="footer-ornament">✦</span><p>Un rincón mágico inspirado en <strong>“Alicia Felicia y la Princesa Martina”</strong><br>Hecho para jugar, imaginar y compartir en familia.</p><span class="footer-ornament">✦</span></section>
+      <section class="storybook-footer"><span class="footer-ornament">✦</span><p>Un rincón mágico inspirado en <strong>“Alicia Felicia y la Princesa Martina”</strong><br>Hecho para leer, jugar, imaginar y compartir en familia.</p><span class="footer-ornament">✦</span></section>
     </main>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

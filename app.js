@@ -21,8 +21,154 @@
   const updateSound = () => {$('#soundText').textContent=state.sound?'Sonidos activados':'Sonidos apagados';$('#soundIcon').textContent=state.sound?'♫':'♪̸';$('#soundToggle').setAttribute('aria-pressed',String(state.sound));};
   $('#soundToggle').addEventListener('click',()=>{state.sound=!state.sound;safeStorage.set('aliciaSound',state.sound?'on':'off');updateSound();if(state.sound)sfx.tap();announce(state.sound?'🔔 ¡Sonidos activados!':'🔇 Sonidos silenciados');}); updateSound();
 
-  function openTab(next){if(next===state.activeTab)return;state.activeTab=next;sfx.tap();$$('.mode-tab').forEach(b=>{const active=b.dataset.tab===next;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});$('#panel-color').hidden=next!=='color';$('#panel-dragon').hidden=next!=='dragon';if(next==='color' && game.mode==='playing')pauseGame();}
-  $$('.mode-tab').forEach(b=>{b.addEventListener('click',()=>openTab(b.dataset.tab));b.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const next=b.dataset.tab==='color'?'dragon':'color';openTab(next);$(`#tab-${next}`).focus();}});});
+  function openTab(next){
+    if(next===state.activeTab)return;
+    state.activeTab=next;sfx.tap();
+    $$('.mode-tab').forEach(b=>{const active=b.dataset.tab===next;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
+    $$('.game-panel[role="tabpanel"]').forEach(p=>{p.hidden=p.id!==`panel-${next}`;});
+    if(next!=='dragon' && game.mode==='playing')pauseGame();
+    if(next==='book'){ readerOpen(); } else { readerClose(); }
+  }
+  $$('.mode-tab').forEach(b=>{
+    b.addEventListener('click',()=>openTab(b.dataset.tab));
+    b.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        e.preventDefault();const keys=['book','color','dragon'];const n=keys.indexOf(b.dataset.tab);const next=keys[(n+(e.key==='ArrowRight'?1:keys.length-1))%keys.length];openTab(next);$(`#tab-${next}`).focus();
+      }
+    });
+  });
+
+  // LECTOR DIGITAL — 21 high-resolution illustrations taken directly from the supplied PDF.
+  // Sheet 1 is the cover, while sheets 2–21 each contain two facing storybook pages.
+  // On phones, each half is presented individually for more readable type.
+  const bookSaved = Number(safeStorage.get('aliciaBookPosition'));
+  const reader={position:Number.isFinite(bookSaved)?Math.min(40,Math.max(0,Math.round(bookSaved))):0,
+    turning:false,musicWanted:safeStorage.get('aliciaReaderMusic')!=='off',audio:null,track:null,
+    mobile:()=>window.matchMedia('(max-width: 700px)').matches};
+  const sceneNames=[
+    'Érase una vez...', 'El bosque encantado','La cueva misteriosa','Una nueva amiga',
+    'Una promesa valiente','Un camino de cristales','El dragón dormido','La espada mágica',
+    '¡El dragón despierta!','Una huida valiente','¡La ardillita es libre!','La corona mágica',
+    'Un mensaje urgente','El hechizo de Martina','Camino al castillo','El castillo oscuro',
+    'Una persecución','Un encuentro inesperado','La corona brilla','La bruja aparece',
+    'Juntos otra vez'
+  ];
+  const bookFile=sheet=>`assets/libro/pagina_${String(sheet).padStart(2,'0')}.webp`;
+  const readerSheet=pos=>pos===0?1:Math.floor((pos-1)/2)+2;
+  const readerChapter=sheet=>sheet<=3?'bosque':sheet<=6?'cueva':sheet<=11?'dragon':sheet<=19?'castillo':'final';
+  function readerAudio(){
+    if(!reader.audio){reader.audio=new Audio();reader.audio.loop=true;reader.audio.volume=.24;reader.audio.preload='auto';reader.audio.addEventListener('error',()=>{if(state.activeTab==='book')announce('No se pudo cargar la música. Podés seguir leyendo igualmente.');});}
+    return reader.audio;
+  }
+  function readerSoundUpdate(){
+    const active=reader.musicWanted&&state.sound;
+    $('#readerMusic').setAttribute('aria-pressed',String(reader.musicWanted));
+    $('#readerMusicSymbol').textContent=active?'♫':'♪̸';
+    $('#readerMusicLabel').textContent=active?'Música activada':reader.musicWanted?'Música silenciada':'Música pausada';
+  }
+  function readerPlayMusic(){
+    readerSoundUpdate();
+    if(!reader.musicWanted || !state.sound || state.activeTab!=='book'){
+      if(reader.audio)reader.audio.pause();return;
+    }
+    const sheet=readerSheet(reader.position);
+    const track=readerChapter(sheet);
+    const audio=readerAudio();
+    if(reader.track!==track){reader.track=track;audio.pause();audio.src=`assets/musica/${track}.mp3`;audio.load();}
+    const promise=audio.play();if(promise&&typeof promise.catch==='function')promise.catch(()=>{readerSoundUpdate();});
+  }
+  function readerOpen(){readerRender();readerPlayMusic();}
+  function readerClose(){if(reader.audio)reader.audio.pause();}
+  const readerLast=()=>reader.mobile()?40:39;
+  const readerPrevious=pos=>reader.mobile()?Math.max(0,pos-1):pos===0?0:pos<=2?0:Math.max(1,(Math.floor((pos-1)/2)-1)*2+1);
+  const readerFollowing=pos=>reader.mobile()?Math.min(40,pos+1):pos===0?1:Math.min(39,(Math.floor((pos-1)/2)+1)*2+1);
+  function readerRender(){
+    const pos=reader.position,sheet=readerSheet(pos),cover=pos===0,mobile=reader.mobile();
+    const book=$('#readerBook'),img=$('#readerImage');
+    book.classList.toggle('is-cover',cover);
+    book.classList.toggle('is-spread',!cover&&!mobile);
+    book.classList.toggle('is-single',!cover&&mobile);
+    img.classList.toggle('is-right',!cover&&mobile&&pos%2===0);
+    const path=bookFile(sheet);
+    if(!img.src.endsWith(path))img.src=path;
+    img.alt=cover?'Portada original: Alicia Felicia y la Princesa Martina, las niñas del bosque y el dragón de fuego':
+      `Ilustración original del cuento, ${sceneNames[sheet-1]}. ${mobile?(pos%2?'Página izquierda':'Página derecha'):'Doble página'}.`;
+    const label=cover?'Portada':mobile?`Página ${pos} de 40`:`Doble página ${sheet-1} de 20`;
+    $('#readerPageLabel').textContent=label;
+    $('#readerPageSubtitle').textContent=cover?'Tu aventura comienza aquí':sceneNames[sheet-1];
+    $('#readerChapter').textContent=`✧ ${sceneNames[sheet-1]}`;
+    $('#readerProgressFill').style.width=`${Math.round((mobile?pos/40:cover?0:(sheet-1)/20)*100)}%`;
+    const prev=pos===0,next=pos>=readerLast();
+    $('#readerPrev').disabled=prev;$('#readerPrevSide').disabled=prev;
+    $('#readerNext').disabled=next;$('#readerNextSide').disabled=next;
+    $('#readerNext').querySelector('span').textContent=cover?'Abrir cuento':next?'Fin del cuento':'Siguiente';
+    $('#readerClickHint').innerHTML=cover?'Tocá para abrir el cuento <span>›</span>':next?'¡Fin del cuento! ✨':`Tocá para pasar página <span>›</span>`;
+    $('#readerClickHint').classList.toggle('is-ending',next);
+    $$('.reader-chapter-chip').forEach(b=>{let start=Number(b.dataset.bookJump);b.classList.toggle('is-current',pos>=start && (b.nextElementSibling?pos<Number(b.nextElementSibling.dataset.bookJump):true));});
+    safeStorage.set('aliciaBookPosition',String(pos));
+    const lookahead=readerFollowing(pos);
+    if(lookahead!==pos){let upcoming=bookFile(readerSheet(lookahead));let load=new Image();load.src=upcoming;}
+  }
+  function readerGo(target){
+    const next=Math.min(readerLast(),Math.max(0,Math.round(target)));
+    if(next===reader.position)return;
+    // Rapid taps should remain responsive: replace an unfinished turn with the latest one.
+    if(reader.turning){reader.turning=false;$('#readerTurnLayer').replaceChildren();}
+    const turnNumber=reader.turnNumber=(reader.turnNumber||0)+1;
+    const previous=reader.position;
+    const oldImage=$('#readerImage').cloneNode();oldImage.removeAttribute('id');
+    const oldCover=previous===0,oldMobile=reader.mobile();
+    const layer=$('#readerTurnLayer');layer.replaceChildren();
+    const leaf=document.createElement('div');leaf.className=`reader-leaf ${oldCover?'leaf-cover':oldMobile?'leaf-single':'leaf-spread'} ${next>previous?'turn-next':'turn-prev'}`;
+    const clip=document.createElement('div');clip.className='reader-leaf-image-clip';
+    clip.append(oldImage);leaf.append(clip);layer.append(leaf);
+    reader.turning=true;
+    reader.position=next;
+    readerRender();readerPlayMusic();sfx.tap();
+    const finish=()=>{if(reader.turnNumber!==turnNumber)return;reader.turning=false;layer.replaceChildren();};
+    leaf.addEventListener('animationend',finish,{once:true});
+    setTimeout(()=>{if(reader.turning)finish();},850);
+  }
+  function readerChange(direction){readerGo(direction>0?readerFollowing(reader.position):readerPrevious(reader.position));}
+  $('#readerPrev').addEventListener('click',()=>readerChange(-1));
+  $('#readerNext').addEventListener('click',()=>readerChange(1));
+  $('#readerPrevSide').addEventListener('click',()=>readerChange(-1));
+  $('#readerNextSide').addEventListener('click',()=>readerChange(1));
+  $('#readerBook').addEventListener('click',e=>{
+    if(reader.mobile()){readerChange(1);return;}
+    const {left,width}=$('#readerBook').getBoundingClientRect();
+    if(reader.position!==0 && e.clientX<left+width*.36)readerChange(-1);else readerChange(1);
+  });
+  $('#readerBook').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();readerChange(1);}});
+  document.addEventListener('keydown',e=>{
+    if(state.activeTab!=='book'||e.altKey||e.ctrlKey||e.metaKey||['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();readerChange(1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();readerChange(-1)}
+  });
+  $$('.reader-chapter-chip').forEach(b=>b.addEventListener('click',()=>{
+    const index=Number(b.dataset.bookJump);
+    const target=reader.mobile()?index:index===0?0:Math.min(39,2*Math.floor((index-1)/2)+1);
+    readerGo(target);
+  }));
+  $('#readerMusic').addEventListener('click',()=>{
+    reader.musicWanted=!reader.musicWanted;
+    safeStorage.set('aliciaReaderMusic',reader.musicWanted?'on':'off');
+    readerPlayMusic();announce(reader.musicWanted?'♫ Música del cuento activada':'♪ Música del cuento pausada');
+  });
+  $('#readerFullscreen').addEventListener('click',async()=>{
+    try{
+      const space=$('#readerSpace');
+      if(document.fullscreenElement){await document.exitFullscreen();return;}
+      if(space.requestFullscreen)await space.requestFullscreen();
+      else announce('Tu navegador no permite pantalla completa.');
+    }catch{announce('Pantalla completa no disponible en este dispositivo.');}
+  });
+  $('#soundToggle').addEventListener('click',()=>readerPlayMusic());
+  window.addEventListener('resize',()=>{if(state.activeTab==='book'&&!reader.turning){
+    reader.position=reader.mobile()?Math.min(40,reader.position):reader.position===0?0:2*Math.floor((reader.position-1)/2)+1;
+    readerRender();}});
+  readerRender();readerSoundUpdate();
+
 
   // COLORING BOOK — four original SVG outlines inspired by the characters of the PDF.
   const C=[
