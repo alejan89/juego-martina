@@ -1,0 +1,66 @@
+
+/* Memotest mágico — cuatro niveles visualmente integrados con el cuento */
+.memo-panel{color:#4d3063}
+.memo-shell{padding:0 30px 28px}
+.memo-levels{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.memo-level{border:2px solid #e5c8e6;background:#fff9f6;color:#664477;border-radius:18px;padding:12px 18px;font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;box-shadow:0 4px 10px #75508212;transition:transform .2s,background .2s}
+.memo-level:hover{transform:translateY(-2px)}
+.memo-level small{display:block;font-family:'Nunito',sans-serif;font-size:12px;color:#90699a}
+.memo-level.is-selected{background:linear-gradient(120deg,#f6d9f1,#fdf0cf);border-color:#b872c2;box-shadow:0 4px 14px #a65aaf33}
+.memo-scoreboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:0 0 16px}
+.memo-stat{border:1px solid #efd9df;background:linear-gradient(135deg,#fffbf5,#fde8f6);border-radius:18px;display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:10px 14px}
+.memo-stat>span{font-size:22px;grid-row:span 2;align-self:center}
+.memo-stat strong{font-size:17px;font-weight:900;color:#5a3378}
+.memo-stat small{font-size:11px;color:#856a95;font-weight:900}
+.memo-stage{position:relative;padding:20px;border-radius:22px;overflow:hidden;border:2px solid #d8b3da;background:linear-gradient(140deg,#322054eb,#633d80ef),url('assets/bosque.webp') center/cover}
+.memo-stage-stars{position:absolute;top:5px;right:19px;opacity:.6;color:#ffe5a3;font-size:23px;pointer-events:none}
+.memo-message{margin:2px 0 16px;color:#fff5d9;font-size:15px;text-align:center}
+.memo-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;max-width:740px;margin:auto}
+.memo-board.memo-expert{grid-template-columns:repeat(5,minmax(0,1fr));max-width:820px}
+.memo-card{position:relative;display:block;padding:0;aspect-ratio:4/5;border:0;background:transparent;border-radius:18px;perspective:900px;cursor:pointer;min-width:0;transition:transform .15s}
+.memo-card:not(.is-matched):hover{transform:translateY(-2px)}
+.memo-card-inner{display:block;width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .52s cubic-bezier(.2,.8,.2,1)}
+.memo-card.is-open .memo-card-inner,.memo-card.is-matched .memo-card-inner{transform:rotateY(180deg)}
+.memo-card-back,.memo-card-front{backface-visibility:hidden;-webkit-backface-visibility:hidden;position:absolute;inset:0;border-radius:16px;overflow:hidden;border:3px solid #f8d995;box-shadow:0 7px 16px #1e0f365e;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.memo-card-back{background:radial-gradient(circle at 35% 22%,#b57dd1,#664190 55%,#4e2a78);color:#fce4a8;gap:4px}
+.memo-back-stars{font-size:clamp(12px,2vw,19px);opacity:.8;letter-spacing:3px}
+.memo-back-crown{font-size:clamp(34px,5.2vw,62px);filter:drop-shadow(0 5px 6px #270d4570)}
+.memo-back-title{max-width:90%;font-family:'Fredoka',sans-serif;font-size:clamp(7px,1.2vw,11px);letter-spacing:.8px;text-align:center}
+.memo-card-front{transform:rotateY(180deg);background:#fff5e7}
+.memo-photo{width:100%;flex:1;min-height:0;background-repeat:no-repeat;background-size:300% 300%;background-color:#efd7d5;border-bottom:2px solid #ffdb93}
+.memo-name{display:grid;place-items:center;text-align:center;min-height:36px;padding:3px 5px;background:#fff9e7;width:100%;font-size:clamp(10px,1.2vw,13px);line-height:1.1;font-family:'Fredoka',sans-serif;font-weight:600;color:#5a3572}
+.memo-card.is-matched .memo-card-front{border-color:#b7eaba;box-shadow:0 0 0 3px #d1f5b9,0 8px 18px #0f202350}
+.memo-victory[hidden]{display:none!important}
+.memo-victory{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#342057eb;color:#fff8e8;padding:20px;z-index:4}
+.memo-victory-icon{font-size:clamp(50px,9vw,100px);animation:memo-pop 1s ease-in-out infinite alternate}
+.memo-victory h3{font:600 clamp(24px,4vw,42px)/1.15 'Fredoka',sans-serif;color:#ffe5a5;margin:14px 0}
+.memo-victory p{max-width:480px;font-size:16px}
+.memo-again{background:linear-gradient(120deg,#ffdd9d,#ffeaf3);color:#55326d;border:2px solid #fff7e1;border-radius:20px;padding:13px 22px;box-shadow:0 9px 20px #20103070;font-weight:900}
+@keyframes memo-pop{from{transform:scale(.93)}to{transform:scale(1.07)}}
+.memo-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:15px 2px}
+.memo-actions>span{font-size:13px;color:#785d8b}
+.memo-action-buttons{display:flex;flex-wrap:wrap;gap:9px}
+.memo-music,.memo-restart{border:2px solid #dcc0e0;background:#fff9fa;color:#583778;border-radius:14px;padding:10px 14px;font-weight:900;font-size:13px}
+.memo-cast{text-align:center;font-size:12px;color:#8a6c96;margin:0}
+@media(max-width:700px){
+  .memo-shell{padding:0 13px 17px}
+  .memo-levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  .memo-level{font-size:13px;border-radius:12px;padding:8px 4px}
+  .memo-level small{font-size:10px}
+  .memo-scoreboard{gap:5px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .memo-stat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:7px 2px;border-radius:10px}
+  .memo-stat>span{font-size:17px}
+  .memo-stat strong{font-size:12px}
+  .memo-stat small{font-size:9px}
+  .memo-stage{padding:13px 7px;border-radius:16px}
+  .memo-board{gap:6px}
+  .memo-board.memo-expert{gap:5px}
+  .memo-card-back,.memo-card-front{border-width:2px;border-radius:9px}
+  .memo-back-crown{font-size:clamp(25px,7vw,40px)}
+  .memo-back-title{font-size:6px;letter-spacing:0}
+  .memo-back-stars{font-size:10px;letter-spacing:0}
+  .memo-name{min-height:27px;font-size:clamp(7px,2vw,10px);padding:2px}
+  .memo-actions{justify-content:center;text-align:center}
+  .memo-cast{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.memo-card-inner,.memo-level{transition:none}.memo-victory-icon{animation:none}}

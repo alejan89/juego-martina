@@ -28,12 +28,13 @@
     $$('.game-panel[role="tabpanel"]').forEach(p=>{p.hidden=p.id!==`panel-${next}`;});
     if(next!=='dragon' && game.mode==='playing')pauseGame();
     if(next==='book'){ readerOpen(); } else { readerClose(); }
+    if(next==='memo'){window.memoStartUI&&window.memoStartUI();}else{window.memoStopUI&&window.memoStopUI();}
   }
   $$('.mode-tab').forEach(b=>{
     b.addEventListener('click',()=>openTab(b.dataset.tab));
     b.addEventListener('keydown',e=>{
       if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-        e.preventDefault();const keys=['book','color','dragon'];const n=keys.indexOf(b.dataset.tab);const next=keys[(n+(e.key==='ArrowRight'?1:keys.length-1))%keys.length];openTab(next);$(`#tab-${next}`).focus();
+        e.preventDefault();const keys=['book','color','dragon','memo'];const n=keys.indexOf(b.dataset.tab);const next=keys[(n+(e.key==='ArrowRight'?1:keys.length-1))%keys.length];openTab(next);$(`#tab-${next}`).focus();
       }
     });
   });
