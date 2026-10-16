@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#221443">
-  <meta name="description" content="Cuatro aventuras mágicas de Alicia Felicia y la Princesa Martina: leé el cuento ilustrado, coloreá personajes y salvá a la ardillita del dragón de fuego.">
+  <meta name="description" content="Cinco aventuras mágicas de Alicia Felicia y la Princesa Martina: leé el cuento ilustrado, coloreá personajes y salvá a la ardillita del dragón de fuego.">
   <title>Aventuras Mágicas · Alicia Felicia y la Princesa Martina</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=lector20261015">
   <link rel="stylesheet" href="memotest.css?v=1">
-  <script src="app.js?v=memotest1" defer></script>
+  <link rel="stylesheet" href="vestidor.css?v=20261015">
+  <script src="app.js?v=vestidor20261015" defer></script>
   <script src="memotest.js?v=1" defer></script>
+  <script src="vestidor.js?v=20261015" defer></script>
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
@@ -52,6 +54,10 @@
           </button>
           <button class="mode-tab memo-tab" id="tab-memo" type="button" role="tab" aria-selected="false" aria-controls="panel-memo" tabindex="-1" data-tab="memo">
             <span class="tab-emoji" aria-hidden="true">🃏</span><span class="tab-words"><strong>Memotest mágico</strong><small>Encontrá las parejas del cuento</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="mode-tab" id="tab-dress" type="button" role="tab" aria-selected="false" aria-controls="panel-dress" tabindex="-1" data-tab="dress">
+            <span class="tab-emoji" aria-hidden="true">👗</span><span class="tab-words"><strong>Vestí a las princesas</strong><small>Vestidos y accesorios mágicos</small></span><span class="tab-arrow" aria-hidden="true">↗</span>
           </button>
         </div>
 
@@ -186,6 +192,33 @@
             <p>Mantené apretada una flecha<br>para mover a Alicia</p>
           </div>
           <div class="game-explainer"><div><span>⭐</span><strong>Primero</strong><small>Juntá 3 estrellas</small></div><span class="explain-next">➜</span><div><span>🔥</span><strong>Después</strong><small>Esquivá las llamas</small></div><span class="explain-next">➜</span><div><span>🐿️</span><strong>¡Por fin!</strong><small>Rescatá a la ardillita</small></div></div>
+        </section>
+
+        <section class="game-panel vestidor-panel" id="panel-dress" role="tabpanel" aria-labelledby="tab-dress" hidden>
+          <div class="panel-heading"><div><div class="section-kicker">✦ EL VESTIDOR ENCANTADO</div>
+            <h2>¡Vestí a Alicia y Martina!</h2><p>Elegí vestidos, coronas, capas, zapatos y accesorios. Conservamos a nuestras protagonistas con sus cabellos y estilos del cuento.</p>
+          </div><div class="heading-sticker" aria-hidden="true">👗</div></div>
+          <div class="vestidor-layout">
+            <div class="vestidor-stage">
+              <div class="vestidor-switch" role="group" aria-label="Elegí un personaje">
+                <button type="button" data-princess="alicia" class="vestidor-princess is-on" aria-pressed="true"><img src="assets/alicia.webp" alt="">🌷 Alicia Felicia</button>
+                <button type="button" data-princess="martina" class="vestidor-princess" aria-pressed="false"><img src="assets/martina.webp" alt="">👑 Princesa Martina</button>
+              </div>
+              <h3 id="vestidorName">Alicia Felicia</h3>
+              <p id="vestidorDesc" class="vestidor-desc">Nuestra exploradora del bosque encantado</p>
+              <div id="vestidorDoll" class="vestidor-doll" role="img" aria-label="Muñeca ilustrada con vestuario intercambiable"></div>
+              <div class="vestidor-stage-actions">
+                <button id="vestidorSurprise" type="button">✨ Sorprendeme</button>
+                <button id="vestidorReset" type="button">↻ Original</button>
+                <button id="vestidorSave" type="button">↓ Guardar PNG</button>
+              </div>
+              <p id="vestidorMessage" class="vestidor-message" role="status" aria-live="polite">¡Elegí una prenda para empezar!</p>
+            </div>
+            <div class="vestidor-catalogue">
+              <div class="vestidor-instructions"><span>✦ ARMÁ TU ESTILO</span><button id="vestidorMusic" type="button" aria-pressed="true">♫ Música: <span id="vestidorMusicText">Sí</span></button></div>
+              <div id="vestidorControls"></div>
+            </div>
+          </div>
         </section>
       </section>
       <section class="storybook-footer"><span class="footer-ornament">✦</span><p>Un rincón mágico inspirado en <strong>“Alicia Felicia y la Princesa Martina”</strong><br>Hecho para leer, jugar, imaginar y compartir en familia.</p><span class="footer-ornament">✦</span></section>
