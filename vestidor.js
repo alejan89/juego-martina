@@ -7,10 +7,10 @@
       name:'Alicia Felicia',description:'Nuestra exploradora del bosque encantado',
       hair:'#75452b', skin:'#f6d4bc', curls:true,
       dress:[
-        {name:'Verde del bosque',color:'#5e9658',light:'#a0c285',trim:'#fff0c8'},
-        {name:'Rosa de las flores',color:'#ee94b5',light:'#ffcfdf',trim:'#fff7ee'},
-        {name:'Lila encantado',color:'#9d7acd',light:'#d7bcf3',trim:'#ffffff'},
-        {name:'Dorado del sol',color:'#ddb85e',light:'#f5dfa0',trim:'#fff8ec'}
+        {name:'Vestido del bosque',type:'apron',color:'#5e9658',light:'#a0c285',trim:'#fff0c8'},
+        {name:'Vestido de flores',type:'petal',color:'#ee94b5',light:'#ffcfdf',trim:'#fff7ee'},
+        {name:'Vestido de fiesta',type:'balloon',color:'#9d7acd',light:'#d7bcf3',trim:'#ffffff'},
+        {name:'Vestido de gala',type:'layered',color:'#ddb85e',light:'#f5dfa0',trim:'#fff8ec'}
       ],
       crown:[
         {name:'Flores silvestres',color:'#ffaccc',type:'flowers'},
@@ -39,10 +39,10 @@
       name:'Princesa Martina',description:'Nuestra pequeña princesa de cabellos dorados',
       hair:'#f0cb73',skin:'#fbe0ca',curls:false,
       dress:[
-        {name:'Rosa de princesa',color:'#f49ac9',light:'#ffe0ed',trim:'#fff9ff'},
-        {name:'Celeste de estrellas',color:'#7bb9df',light:'#d8f4ff',trim:'#fffdf8'},
-        {name:'Lila de fantasía',color:'#ad86e2',light:'#e6d9ff',trim:'#fffafd'},
-        {name:'Dorado brillante',color:'#e3b857',light:'#faeab0',trim:'#fff8e8'}
+        {name:'Vestido real rosa',type:'ballgown',color:'#f49ac9',light:'#ffe0ed',trim:'#fff9ff'},
+        {name:'Vestido celeste',type:'frill',color:'#7bb9df',light:'#d8f4ff',trim:'#fffdf8'},
+        {name:'Vestido lila',type:'ruffle',color:'#ad86e2',light:'#e6d9ff',trim:'#fffafd'},
+        {name:'Vestido dorado',type:'sun',color:'#e3b857',light:'#faeab0',trim:'#fff8e8'}
       ],
       crown:[
         {name:'Corona real',color:'#e8bd5b',type:'royal'},
@@ -118,15 +118,25 @@
     if(cp.color!=='none')S.push('<path d="M-58 -4 C-124 0 -131 126 -98 255 Q-52 281 -28 206 L24 205 Q57 281 100 255 C135 126 125 0 58 -4Z" fill="'+cp.color+'" stroke="'+cp.light+'" stroke-width="7"/>');
     S.push('<path d="M-31 207 V286 M31 207 V286" stroke="'+who.skin+'" stroke-width="23" stroke-linecap="round"/>');
     S.push('<ellipse cx="-36" cy="295" rx="36" ry="17" fill="'+sh.color+'" stroke="'+sh.light+'" stroke-width="6"/><ellipse cx="36" cy="295" rx="36" ry="17" fill="'+sh.color+'" stroke="'+sh.light+'" stroke-width="6"/>');
-    S.push('<path d="M-48 40 Q0 8 48 40 C78 118 104 186 84 253 Q0 272 -84 253 C-104 186 -78 118 -48 40Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="7"/>');
-    S.push('<path d="M-73 206 Q0 240 73 206 M-57 137 Q0 167 57 137" stroke="'+d.light+'" stroke-width="7" fill="none" opacity=".7"/>');
+    let skirt='';
+    switch(d.type){
+      case 'apron': skirt='<path d="M-50 43 Q0 75 50 43 L70 249 H-70Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><path d="M-21 78 L21 78 L27 214 L-27 214 Z" fill="'+d.light+'" opacity=".75"/><rect x="-18" y="55" width="36" height="16" rx="7" fill="'+d.trim+'"/>';break;
+      case 'petal': skirt='<path d="M-54 42 Q0 73 54 42 C38 100 24 134 8 164 C32 184 55 212 75 248 H-75 C-55 212 -32 184 -8 164 C-24 134 -38 100 -54 42Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><path d="M-35 115 Q0 137 35 115" fill="none" stroke="'+d.light+'" stroke-width="7"/>';break;
+      case 'balloon': skirt='<path d="M-55 43 Q0 73 55 43 C83 96 92 186 68 248 H-68 C-92 186 -83 96 -55 43Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><circle cx="0" cy="125" r="9" fill="'+d.trim+'"/>';break;
+      case 'layered': skirt='<path d="M-55 42 Q0 73 55 42 L70 114 Q0 144 -70 114Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="5"/><path d="M-70 114 Q0 151 70 114 L82 181 Q0 216 -82 181Z" fill="'+d.light+'" stroke="'+d.trim+'" stroke-width="5"/><path d="M-82 181 Q0 213 82 181 L88 249 H-88Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="5"/>';break;
+      case 'ballgown': skirt='<path d="M-55 42 Q0 73 55 42 C90 90 110 178 105 249 H-105 C-110 178 -90 90 -55 42Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><path d="M-73 136 Q0 109 73 136" fill="none" stroke="'+d.light+'" stroke-width="8"/>';break;
+      case 'frill': skirt='<path d="M-54 42 Q0 73 54 42 L72 104 Q0 139 -72 104Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="5"/><path d="M-72 104 Q0 142 72 104 L85 168 Q0 207 -85 168Z" fill="'+d.light+'" stroke="'+d.trim+'" stroke-width="5"/><path d="M-85 168 Q0 210 85 168 L94 249 H-94Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="5"/>';break;
+      case 'ruffle': skirt='<path d="M-55 43 Q0 73 55 43 C56 78 86 103 82 139 C78 188 72 221 64 249 H-64 C-72 221 -78 188 -82 139 C-86 103 -56 78 -55 43Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><path d="M-51 101 Q0 83 51 101 M-57 152 Q0 132 57 152" fill="none" stroke="'+d.light+'" stroke-width="8"/>';break;
+      default: skirt='<path d="M-55 43 Q0 73 55 43 L86 249 H-86 Z" fill="'+d.color+'" stroke="'+d.trim+'" stroke-width="6"/><path d="M-40 111 L0 89 L40 111" stroke="'+d.light+'" stroke-width="7" fill="none"/>';break;
+    }
+    S.push(skirt);
     S.push('<path d="M-46 -14 Q0 -38 46 -14 L52 61 Q0 94 -52 61 Z" fill="'+d.light+'" stroke="'+d.trim+'" stroke-width="5"/>');
     S.push('<path d="M-48 15 Q-72 37 -87 112 M48 15 Q72 37 87 112" stroke="'+who.skin+'" stroke-width="23" stroke-linecap="round"/>');
     S.push('<ellipse cx="-58" cy="25" rx="22" ry="24" fill="'+d.light+'"/><ellipse cx="58" cy="25" rx="22" ry="24" fill="'+d.light+'"/>');
     S.push('<rect x="-20" y="65" width="40" height="17" rx="8" fill="'+d.trim+'"/>');
     // La silueta capilar conserva las principales características del personaje.
-    S.push('<path d="M-69 -87 C-79 -157 79 -163 73 -87 L82 22 Q67 57 47 65 L-48 65 Q-82 38 -82 -5 Z" fill="'+who.hair+'"/>');
-    if(who.curls)S.push([-67,-52,-37,40,53,68].map((x,i)=>'<circle cx="'+x+'" cy="'+(i%2?10:34)+'" r="21" fill="'+who.hair+'"/>').join(''));
+    S.push('<path d="M-73 -91 C-83 -163 83 -163 76 -91 L70 -42 Q62 -75 43 -105 Q0 -133 -43 -105 Q-66 -74 -68 -43Z" fill="'+who.hair+'"/>');
+    if(who.curls)S.push('<path d="M-63 -85 C-100 -39 -97 42 -69 67" stroke="'+who.hair+'" stroke-width="20" fill="none" stroke-linecap="round"/><path d="M63 -85 C100 -39 97 42 69 67" stroke="'+who.hair+'" stroke-width="20" fill="none" stroke-linecap="round"/>');
     S.push('<ellipse cx="0" cy="-76" rx="61" ry="70" fill="'+who.skin+'"/>');
     S.push('<path d="M-63 -90 Q-72 -149 -14 -149 Q38 -148 68 -103 Q42 -111 14 -121 Q-24 -104 -61 -96 Z" fill="'+who.hair+'"/>');
     if(who.curls)S.push('<path d="M-52 -117 Q-12 -153 17 -129 Q5 -108 -15 -112 Q-31 -91 -55 -89Z" fill="'+who.hair+'"/>');
@@ -142,6 +152,46 @@
     S.push('</svg>');
     return S.join('');
   }
+
+  // Previews are original SVG garment/accessory illustrations, not color swatches.
+  function garmentPreview(group,entry) {
+    const a=entry.color, b=entry.light||'#ffe9c8', c=entry.trim||'#fff9eb';
+    if(group==='dress') {
+      let hem='';
+      if(entry.type==='apron') hem='<path d="M18 50 l-8 60 h84 l-8-60 Q52 72 18 50z" fill="'+a+'"/><path d="M42 59 h20 v38 H42z" fill="'+b+'" opacity=".8"/>';
+      else if(entry.type==='petal') hem='<path d="M18 50 Q30 76 14 110 H94 Q78 78 86 50 Q52 70 18 50z" fill="'+a+'"/><path d="M17 95 Q52 112 87 95" stroke="'+c+'" stroke-width="5" fill="none"/>';
+      else if(entry.type==='balloon') hem='<path d="M18 50 C-2 74 2 98 13 110 H91 C102 98 106 74 86 50 Q52 69 18 50z" fill="'+a+'"/><circle cx="52" cy="91" r="5" fill="'+c+'"/>';
+      else if(entry.type==='layered') hem='<path d="M18 51 Q52 70 86 51 L94 70 H10Z" fill="'+a+'"/><path d="M10 70 Q52 91 94 70 L100 89 H4Z" fill="'+b+'"/><path d="M4 89 Q52 106 100 89 L104 110 H0Z" fill="'+a+'"/>';
+      else if(entry.type==='ballgown') hem='<path d="M18 51 Q52 69 86 51 C100 70 107 92 109 110 H-5 C-3 92 4 70 18 51Z" fill="'+a+'"/><path d="M20 79 Q52 66 84 79" fill="none" stroke="'+c+'" stroke-width="4"/>';
+      else if(entry.type==='frill') hem='<path d="M18 51 Q52 69 86 51 L94 71 Q52 91 10 71Z" fill="'+a+'"/><path d="M10 71 Q52 93 94 71 L105 110 H-1Z" fill="'+b+'"/>';
+      else if(entry.type==='ruffle') hem='<path d="M18 51 Q52 69 86 51 C72 78 100 94 91 110 H13 C4 94 32 78 18 51Z" fill="'+a+'"/><path d="M22 81 Q52 69 82 81 M21 95 Q52 85 83 95" fill="none" stroke="'+c+'" stroke-width="4"/>';
+      else hem='<path d="M18 51 Q52 70 86 51 L103 110 H1 Z" fill="'+a+'"/><path d="M30 80 L52 69 L74 80" stroke="'+c+'" stroke-width="4" fill="none"/>';
+      return '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M34 23 Q52 9 70 23 L86 50 Q52 70 18 50Z" fill="'+b+'" stroke="'+c+'" stroke-width="3"/>'+hem+'<rect x="44" y="52" width="16" height="8" rx="4" fill="'+c+'"/></svg>';
+    }
+    if(group==='shoes')return '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="32" cy="79" rx="23" ry="11" fill="'+a+'" stroke="'+b+'" stroke-width="5"/><ellipse cx="73" cy="79" rx="23" ry="11" fill="'+a+'" stroke="'+b+'" stroke-width="5"/><path d="M22 76 H42 M63 76 H83" stroke="#fff5e2" stroke-width="3"/></svg>';
+    if(group==='cape')return entry.color==='none'?
+      '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23 66 Q52 43 81 66" stroke="#ae9dbd" stroke-width="5" fill="none"/><text x="52" y="92" text-anchor="middle" font-family="Arial" font-size="14" fill="#836b99">Sin capa</text></svg>':
+      '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M33 17 Q52 7 71 17 C88 53 90 88 78 111 L55 83 H49 L26 111 C14 88 16 53 33 17Z" fill="'+a+'" stroke="'+b+'" stroke-width="5"/></svg>';
+    if(group==='crown') {
+      let art=entry.type==='flowers'?
+        '<path d="M17 76 Q52 47 87 76" stroke="#71a16c" stroke-width="5" fill="none"/>'+[26,43,60,78].map(x=>'<circle cx="'+x+'" cy="68" r="10" fill="'+a+'" stroke="#fff4bb" stroke-width="3"/>').join(''):
+        entry.type==='hearts'?
+        '<path d="M17 78 Q52 54 87 78" stroke="#c3915d" stroke-width="5" fill="none"/>'+[30,52,74].map(x=>'<path d="M'+(x-7)+' 60 c-8-8-18 4-7 13 l7 7 7-7 c11-9 1-21-7-13z" fill="'+a+'" stroke="#fff7ee" stroke-width="2"/>').join(''):
+        entry.type==='stars'?
+        '<path d="M17 79 Q52 54 87 79" stroke="#ae89ca" stroke-width="5" fill="none"/>'+[31,52,73].map(x=>'<path d="M'+x+' 47 l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="'+a+'" stroke="#fff2d1" stroke-width="2"/>').join(''):
+        '<path d="M19 78 L27 50 L41 67 L52 38 L63 67 L77 50 L85 78Z" fill="'+a+'" stroke="#ba8b45" stroke-width="4"/><circle cx="52" cy="60" r="7" fill="#fff9c7"/>';
+      return '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+art+'</svg>';
+    }
+    let icon='';
+    if(entry.type==='bag')icon='<path d="M37 50 Q37 26 52 26 Q67 26 67 50" stroke="#f4dfad" stroke-width="5" fill="none"/><rect x="29" y="48" width="46" height="48" rx="11" fill="'+a+'" stroke="#e7cc90" stroke-width="4"/>';
+    else if(entry.type==='butterfly')icon='<ellipse cx="37" cy="52" rx="20" ry="14" fill="'+a+'"/><ellipse cx="67" cy="52" rx="20" ry="14" fill="#d5bdff"/><ellipse cx="40" cy="75" rx="14" ry="12" fill="#e7dcff"/><ellipse cx="64" cy="75" rx="14" ry="12" fill="#b6efff"/><path d="M52 42 v43" stroke="#71548e" stroke-width="5"/>';
+    else if(entry.type==='wand')icon='<path d="M30 100 L68 35" stroke="#c68b9c" stroke-width="7"/><path d="M68 18 l6 14 15 1-11 10 3 15-13-8-13 8 3-15-11-10 15-1z" fill="'+a+'" stroke="#fff4ca" stroke-width="3"/>';
+    else if(entry.type==='teddy')icon='<circle cx="52" cy="46" r="22" fill="'+a+'"/><circle cx="35" cy="28" r="10" fill="'+a+'"/><circle cx="69" cy="28" r="10" fill="'+a+'"/><ellipse cx="52" cy="80" rx="25" ry="29" fill="'+a+'"/><circle cx="45" cy="47" r="3" fill="#553b29"/><circle cx="59" cy="47" r="3" fill="#553b29"/>';
+    else if(entry.type==='gem')icon='<path d="M52 28 L78 54 L65 90 H39 L26 54 Z" fill="'+a+'" stroke="#fff2d2" stroke-width="5"/><path d="M52 36 L64 56 L52 82 L40 56Z" fill="#ffeafa"/>';
+    else icon='<path d="M52 42 v50" stroke="#72ab70" stroke-width="5"/>'+[[-13,0],[13,0],[0,-14],[0,13]].map(([x,y])=>'<circle cx="'+(52+x)+'" cy="'+(51+y)+'" r="13" fill="'+a+'"/>').join('')+'<circle cx="52" cy="51" r="6" fill="#fff0a1"/>';
+    return '<svg viewBox="0 0 104 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+icon+'</svg>';
+  }
+
   function repaint(){
     $('#vestidorName').textContent=person().name;
     $('#vestidorDesc').textContent=person().description;
@@ -159,10 +209,10 @@
         const b=document.createElement('button');b.type='button';b.className='vestidor-option';
         const active=state.choices[state.who][group]===i;
         b.classList.toggle('is-on',active);b.setAttribute('aria-pressed',String(active));
-        const swatch=document.createElement('span');swatch.className='vestidor-swatch';
-        swatch.style.background=entry.color==='none'?'linear-gradient(135deg,#f0f0f0 49%,#df8dab 50%)':entry.color;
-        const label=document.createElement('span');label.textContent=entry.name;
-        b.append(swatch,label);
+        const preview=document.createElement('span');preview.className='vestidor-thumbnail';
+        preview.innerHTML=garmentPreview(group,entry);
+        const label=document.createElement('span');label.className='vestidor-choice-label';label.textContent=entry.name;
+        b.append(preview,label);
         b.addEventListener('click',()=>{
           state.choices[state.who][group]=i;save();repaint();phrase('✨ ¡Elegiste '+entry.name.toLowerCase()+'!');
         });grid.append(b);
@@ -219,7 +269,7 @@
     });
     $('#vestidorReset').addEventListener('click',()=>{
       for(const [group] of groups)state.choices[state.who][group]=0;
-      save();repaint();phrase('🌸 ¡Volvimos a los colores del cuento!');
+      save();repaint();phrase('🌸 ¡Volvimos al vestuario original!');
     });
     $('#vestidorSave').addEventListener('click',saveImage);
     $('#vestidorMusic').addEventListener('click',()=>{

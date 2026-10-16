@@ -27,3 +27,26 @@
 @media(max-width:880px){.vestidor-layout{grid-template-columns:minmax(0,1fr);padding:0 15px 20px}.vestidor-stage{position:relative}.vestidor-doll{max-width:360px}.vestidor-stage-actions{justify-content:center}}
 @media(max-width:480px){.vestidor-layout{padding:0 9px 15px;gap:12px}.vestidor-stage{padding:11px;border-radius:17px}.vestidor-princess{padding:5px;font-size:11px}.vestidor-princess img{width:32px;height:32px}.vestidor-stage h3{font-size:23px}.vestidor-box{padding:10px}.vestidor-box h4{font-size:18px}.vestidor-option{font-size:11px;padding:6px;min-height:44px}.vestidor-doll{max-width:320px}}
 @media(prefers-reduced-motion:reduce){.vestidor-princess,.vestidor-option{transition:none}}
+
+
+/* Vestidor corregido: cada opción muestra una miniatura ilustrada del artículo */
+.vestidor-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vestidor-option{display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;min-height:145px;padding:8px 8px 11px;gap:7px;overflow:hidden;transition:transform .18s ease,border-color .18s ease}
+.vestidor-option:hover{transform:translateY(-2px)}
+.vestidor-option.is-on{background:linear-gradient(145deg,#fff3cd,#ffe8fa);border-color:#b877ca;box-shadow:0 6px 16px #9662ab24}
+.vestidor-thumbnail{display:flex;align-items:center;justify-content:center;width:100%;height:105px;max-width:140px;background:linear-gradient(155deg,#fffbef,#f6ebff);border-radius:12px;border:1px solid #e9d6e5;overflow:hidden}
+.vestidor-thumbnail svg{height:100%;max-width:100%;display:block}
+.vestidor-choice-label{font-size:13px;line-height:1.24;font-weight:900;color:#573773;min-height:31px;display:flex;align-items:center;justify-content:center}
+.vestidor-doll{max-width:430px}
+.vestidor-doll svg{width:100%;height:auto}
+@media(max-width:680px){
+ .vestidor-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .vestidor-option{min-height:120px;padding:6px}
+ .vestidor-thumbnail{height:79px}
+ .vestidor-choice-label{font-size:11px;min-height:26px}
+}
+@media(max-width:370px){
+ .vestidor-thumbnail{height:68px}
+ .vestidor-option{min-height:109px}
+ .vestidor-choice-label{font-size:10px}
+}
